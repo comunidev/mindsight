@@ -1,0 +1,19 @@
+---
+const isDev = import.meta.env.DEV;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    {
+      isDev && (
+        <script src="//localhost:8080/target.js" embedded="true" is:inline />
+      )
+    }
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
