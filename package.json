@@ -11,9 +11,6 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@1log/console": "^0.0.15",
-    "@1log/core": "^0.0.5",
-    "@1log/rxjs": "^0.0.7",
     "@astrojs/solid-js": "^3.0.1",
     "@solid-devtools/overlay": "^0.27.7",
     "@solid-primitives/mouse": "^2.0.16",
@@ -36,26 +33,19 @@
     "vite": "^4.4.10"
   },
   "devDependencies": {
-    "@astrojs/svelte": "^4.0.2",
     "@solid-devtools/debugger": "^0.22.4",
     "@solid-devtools/logger": "^0.7.4",
     "@types/node": "^20.7.0",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
-    "@unocss/extractor-svelte": "^0.56.5",
     "@unocss/postcss": "^0.56.4",
     "@unocss/reset": "^0.56.2",
     "chii": "^1.9.0",
     "eslint": "^8.50.0",
     "eslint-plugin-rxjs": "^5.0.3",
-    "eslint-plugin-svelte": "^2.34.0",
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.0",
-    "prettier-plugin-svelte": "^3.0.3",
     "solid-devtools": "^0.27.7",
-    "svelte": "^4.2.1",
-    "svelte-dnd-action": "^0.9.31",
-    "svelte-drag-and-drop-actions": "^1.0.0",
     "typescript": "^5.2.2",
     "unocss": "^0.56.2",
     "vitest": "^0.34.5"
@@ -85,20 +75,13 @@
     "semi": false,
     "arrowParens": "avoid",
     "plugins": [
-      "prettier-plugin-astro",
-      "prettier-plugin-svelte"
+      "prettier-plugin-astro"
     ],
     "overrides": [
       {
         "files": "*.astro",
         "options": {
           "parser": "astro"
-        }
-      },
-      {
-        "files": "*.svelte",
-        "options": {
-          "parser": "svelte"
         }
       }
     ]

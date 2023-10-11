@@ -54,12 +54,13 @@ export const CanvasObject: Component<{
         el.draggable = Boolean(object()?.isDraggable && object()?.isSelected)
 
         function handleOnMouseEnter(e: MouseEvent) {
-          console.log(e.currentTarget)
           e.target.style.cursor = "grab"
+          e.target.draggable = object?.()?.isDraggable && object?.()?.isSelected
         }
 
         function handleOnMouseLeave(e: MouseEvent) {
           e.target.style.cursor = "auto"
+          e.target.draggable = false
         }
 
         el.addEventListener("mouseenter", handleOnMouseEnter)
@@ -75,11 +76,10 @@ export const CanvasObject: Component<{
       <Show when={object() !== undefined}>
         <div
           id={`canvas-object:${object()?.id}`}
+          class="absolute top-0 left-0"
           style={{
-            left: `${object()?.x}px`,
-            top: `${object()?.y}px`,
+            transform: `translate(${object()?.x}px, ${object()?.y}px)`,
           }}
-          class="absolute"
           onDragStart={handleDragStart}
           onDrag={handleDrag}
           onDragEnd={handleDragEnd}

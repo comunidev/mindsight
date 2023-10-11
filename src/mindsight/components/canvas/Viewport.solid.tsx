@@ -1,10 +1,41 @@
-import { For, createEffect } from "solid-js"
+import { For, batch, createEffect } from "solid-js"
 import { useMindsight } from "../../Mindsight"
 import { CanvasObject } from "./CanvasObject.solid"
 import { createDexieArrayQuery } from "solid-dexie"
 import { memo, signal } from "../../utils"
 
-export const Sandbox = () => {
+import { createContext, useContext, type ParentComponent, type Accessor } from "solid-js"
+
+interface DraggingContextProviderProps {
+  draggingX: Accessor<number>
+  draggingY: Accessor<number>
+  isDragging: Accessor<boolean>
+  viewportX: Accessor<number>
+  viewportY: Accessor<number>
+  viewportWidth: Accessor<number>
+  viewportHeight: Accessor<number>
+  isInside: Accessor<boolean>
+  updateViewport: (x: number, y: number) => void
+  handleDragStart: (e: { x: number; y: number }) => void
+  handleDrag: (e: { x: number; y: number }) => void
+  handleDragEnd: () => void
+}
+
+export const DraggingContext = createContext<DraggingContextProviderProps>()
+
+export const DraggingContextProvider: ParentComponent<
+  DraggingContextProviderProps
+> = props => {
+  return (
+    <DraggingContext.Provider value={props}>{props.children}</DraggingContext.Provider>
+  )
+}
+
+export const useCanvasObject = () => {
+  return useContext(DraggingContext)
+}
+
+export const Viewport = () => {
   const { canvas } = useMindsight()
 
   const objectIds = createDexieArrayQuery(() => canvas.getAllCanvasObjectIds())
@@ -43,8 +74,10 @@ export const Sandbox = () => {
   const draggingY = memo(() => viewportY.$ - dragStartY.$)
 
   const updateViewport = (x: number, y: number) => {
-    viewportX(x - viewportRef.offsetLeft)
-    viewportY(y - viewportRef.offsetTop)
+    batch(() => {
+      viewportX(x - viewportRef.offsetLeft)
+      viewportY(y - viewportRef.offsetTop)
+    })
   }
 
   const handleMouseMove = (e: MouseEvent) => {
@@ -53,6 +86,10 @@ export const Sandbox = () => {
 
   const handleDragStart = ({ x, y }: { x: number; y: number }) => {
     updateViewport(x, y)
+    batch(() => {
+      dragStartY(viewportY.$)
+      dragStartX(viewportX.$)
+    })
   }
 
   const handleDragEnd = async () => {

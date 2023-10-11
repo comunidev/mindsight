@@ -1,7 +1,7 @@
 import type { Component } from "solid-js"
 import { Mindsight, MindsightContext } from "../../Mindsight"
 import { getFakeServerClient } from "../../serverClient/FakeServerClient"
-import { Sandbox } from "../canvas/Sandbox.solid"
+import { Viewport } from "../canvas/Viewport.solid"
 import "solid-devtools"
 import { attachDevtoolsOverlay } from "@solid-devtools/overlay"
 
@@ -14,7 +14,7 @@ export const MindsightRoot: Component<{
 
   return (
     <MindsightContext.Provider value={{ ...app }}>
-      <Sandbox />
+      <Viewport />
     </MindsightContext.Provider>
   )
 }
