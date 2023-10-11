@@ -4,7 +4,7 @@ import { createDexieSignalQuery } from "solid-dexie"
 import type { PromiseExtended } from "dexie"
 import type { IInformation } from "../../interfaces/IInformation"
 import { useCanvasObject } from "./contexts/useCanvasObject"
-// import { useCanvasObject } from "./contexts/useCanvasObject"
+import { useDragging } from "./contexts/draggingContext"
 
 export const Card: Component<{
   id: string
@@ -19,15 +19,20 @@ export const Card: Component<{
       >,
   )
 
-  const { registerDragger, canvasObject } = useCanvasObject()
+  const { canvasObject } = useCanvasObject()
+  const { registerDragger } = useDragging()
 
   return (
     <Show when={information() !== undefined}>
       <div
         class="select-none bg-white rounded-1  p-2"
-        use:registerDragger={null}
         classList={{
           "border-2 border-blue-5": canvasObject?.()?.isSelected,
+        }}
+        ref={el => {
+          registerDragger(el, () =>
+            Boolean(canvasObject?.()?.isDraggable && canvasObject?.()?.isSelected),
+          )
         }}
       >
         <div class="w-full h-full">

@@ -102,6 +102,17 @@ export class CanvasService {
     return this.db.canvasObjects.toArray()
   }
 
+  async moveSelectedObjects(dx: number, dy: number) {
+    const selectedObjects = await this.getAllSelectedCanvasObjects()
+    const updates = selectedObjects.map(co => ({
+      ...co,
+      x: co.x + dx,
+      y: co.y + dy,
+    }))
+
+    await this.db.canvasObjects.bulkPut(updates)
+  }
+
   getAllSelectedCanvasObjects() {
     return this.db.canvasObjects.filter(co => co.isSelected!!).toArray()
   }
