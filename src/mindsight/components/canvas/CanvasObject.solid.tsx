@@ -2,7 +2,6 @@ import { Switch, type Component, Match, Show, createMemo } from "solid-js"
 import { useMindsight } from "../../Mindsight"
 import { createDexieSignalQuery } from "solid-dexie"
 import { Card } from "./Card.solid"
-import { memo } from "../../utils"
 import { CanvasObjectProvider } from "./contexts/useCanvasObject"
 import { useDragging } from "./contexts/draggingContext"
 
@@ -13,7 +12,7 @@ export const CanvasObject: Component<{
 
   const object = createDexieSignalQuery(() => app.canvas.getCanvasObject(props.id))
 
-  const informationId = memo(() => object()?.informationId)
+  const informationId = createMemo(() => object()?.informationId)
 
   const handleSelect = async (e: MouseEvent) => {
     e.stopPropagation()
@@ -36,10 +35,10 @@ export const CanvasObject: Component<{
   )
 
   const x = createMemo(() =>
-    isDraggable() ? dragging.draggingX + object()?.x : object()?.x,
+    isDraggable() ? dragging.draggingX + object?.()?.x : object()?.x,
   )
   const y = createMemo(() =>
-    isDraggable() ? dragging.draggingY + object()?.y : object()?.y,
+    isDraggable() ? dragging.draggingY + object?.()?.y : object()?.y,
   )
 
   return (
@@ -55,7 +54,7 @@ export const CanvasObject: Component<{
         >
           <Switch fallback={<></>}>
             <Match when={object()?.type === "card"}>
-              <Card id={props.id} informationId={informationId.$} />
+              <Card id={props.id} informationId={informationId() ?? ""} />
             </Match>
           </Switch>
         </div>

@@ -8,11 +8,7 @@ interface IViewport {
     x: number
     y: number
   }
-  defaultCenterAt: {
-    x: number
-    y: number
-  }
-  defaultZoomLevel: number
-  defaultRotation: number
-  defaultScale: number
+  zoomLevel: number
+  rotation: number
+  scale: number
 }

@@ -10,11 +10,7 @@ attachDevtoolsOverlay()
 export const MindsightRoot: Component<{
   instanceId: string
 }> = props => {
-  const app = new Mindsight(props.instanceId, getFakeServerClient())
+  const App = new Mindsight(props.instanceId, getFakeServerClient())
 
-  return (
-    <MindsightContext.Provider value={{ ...app }}>
-      <Viewport />
-    </MindsightContext.Provider>
-  )
+  return <App.Provider></App.Provider>
 }

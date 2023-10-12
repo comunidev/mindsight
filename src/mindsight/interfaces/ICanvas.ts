@@ -1,6 +1,7 @@
 interface ICanvas {
-    id: string
-    name: string
-    description: string
-    objects: string[]
+  id: string
+  name: string
+  description: string
+  projectId: string
+  ownerId: string
 }
