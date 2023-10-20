@@ -24,5 +24,10 @@
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "editor.wordWrap": "on",
+  "diffEditor.wordWrap": "inherit",
+  "editor.wrappingStrategy": "simple",
+  "debug.console.wordWrap": true,
+  "editor.wordWrapColumn": 80
 }

@@ -4,6 +4,7 @@ import { createDexieSignalQuery } from "solid-dexie"
 import { Card } from "./Card.solid"
 import { CanvasObjectProvider } from "./contexts/useCanvasObject"
 import { useDragging } from "./contexts/draggingContext"
+import { Marker } from "./Marker"
 
 export const CanvasObject: Component<{
   id: string
@@ -45,16 +46,20 @@ export const CanvasObject: Component<{
     <CanvasObjectProvider canvasObject={object}>
       <Show when={object() !== undefined}>
         <div
+          tabIndex={0}
           id={`canvas-object:${object()?.id}`}
           class="absolute top-0 left-0"
           style={{
-            transform: `translate(${x()}px, ${y()}px)`,
+            transform: `translate(${x()}px, ${-y()}px)`,
           }}
           onClick={handleSelect}
         >
           <Switch fallback={<></>}>
             <Match when={object()?.type === "card"}>
               <Card id={props.id} informationId={informationId() ?? ""} />
+            </Match>
+            <Match when={object()?.type === "marker"}>
+              <Marker id={props.id} />
             </Match>
           </Switch>
         </div>

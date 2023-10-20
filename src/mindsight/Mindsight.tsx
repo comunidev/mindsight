@@ -1,4 +1,9 @@
-import { createContext, useContext, type JSXElement } from "solid-js"
+import {
+  createContext,
+  useContext,
+  type JSXElement,
+  type ParentComponent,
+} from "solid-js"
 import { LocalDb } from "./LocalDb"
 import type { IServerClient } from "./serverClient/IServerClient"
 import { CanvasService } from "./services/Canvas"
@@ -23,7 +28,7 @@ export class Mindsight {
   canvas: CanvasService
   information: InformationService
   session: SessionService
-  UIService: UIService
+  //UIService: UIService
 
   constructor(
     public instanceId: string,
@@ -32,12 +37,12 @@ export class Mindsight {
     this.db = new LocalDb(instanceId)
     this.canvas = new CanvasService(this.db)
     this.session = new SessionService(this.db)
-    this.ui = new UIService(this.db)
+    // this.ui = new UIService(this.db)
     this.information = new InformationService(this.db, this.server)
     this.Provider = this.Provider.bind(this)
   }
 
-  Provider(): JSXElement {
+  Provider: ParentComponent = props => {
     return (
       <MindsightContext.Provider
         value={{
@@ -48,7 +53,7 @@ export class Mindsight {
           information: this.information,
         }}
       >
-        <slot />
+        {props.children}
       </MindsightContext.Provider>
     )
   }

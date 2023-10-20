@@ -12,5 +12,9 @@ export const MindsightRoot: Component<{
 }> = props => {
   const App = new Mindsight(props.instanceId, getFakeServerClient())
 
-  return <App.Provider></App.Provider>
+  return (
+    <App.Provider>
+      <Viewport id="id" canvasId="" />
+    </App.Provider>
+  )
 }

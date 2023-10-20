@@ -1,0 +1,14 @@
+- [ ] Markers
+  - [x] Create marker
+    - [x] Create marker at current position using the `M` key
+    - [ ] Display marker
+  - [x] Delete marker
+  - [x] Move marker
+  - [ ] Change marker name
+- [ ] Connection lines
+  - [ ] Enter lines mode using the `L` key
+- [x] Delete canvas object
+- [ ] Codeblocks
+  - [ ] Create codeblock
+    - [ ] Create codeblock at current position using the `2` key
+    - [ ] Display the codeblock

@@ -2,6 +2,7 @@ import { ulid } from "ulid"
 import type { LocalDb } from "../LocalDb"
 import type { ICanvasObject } from "../interfaces/ICanvasObject"
 import { keyBy } from "lodash"
+import { async } from "rxjs"
 
 export class CanvasService {
   constructor(public db: LocalDb) {}
@@ -45,6 +46,24 @@ export class CanvasService {
       canvasId,
       type: "card",
       creatorId: "TODO",
+      depth: 0,
+      height: 100,
+      width: 100,
+      isDraggable: true,
+      isEditable: true,
+      isSelectable: true,
+      isSelected: false,
+    })
+  }
+
+  async newMarkerOnCanvas(canvasId: string, x: number, y: number) {
+    await this.db.canvasObjects.add({
+      id: ulid(),
+      x,
+      y,
+      canvasId,
+      type: "marker",
+      name: "untitled",
       depth: 0,
       height: 100,
       width: 100,
@@ -115,5 +134,12 @@ export class CanvasService {
 
   getAllSelectedCanvasObjects() {
     return this.db.canvasObjects.filter(co => co.isSelected!!).toArray()
+  }
+
+  deleteSelectedCanvasObjects() {
+    return this.db.canvasObjects
+      .filter(co => co.isSelected!!)
+      .primaryKeys()
+      .then(ids => this.db.canvasObjects.bulkDelete(ids))
   }
 }
