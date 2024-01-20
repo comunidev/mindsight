@@ -30,7 +30,7 @@
     "solidjs-use": "^2.3.0",
     "ulid": "^2.3.0",
     "utility-types": "^3.10.0",
-    "vite": "^4.4.10"
+    "vite": "^4.5.2"
   },
   "devDependencies": {
     "@solid-devtools/debugger": "^0.22.4",
